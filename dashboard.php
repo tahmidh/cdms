@@ -85,20 +85,25 @@
             <div class="page-content inset">
                 <div class="row">
                     <div class="col-md-12">
-                        <p class="lead">This simple sidebar template has a hint of JavaScript to make the template responsive. It also includes Font Awesome icon fonts.</p>
-                    </div>
-                    <div class="col-md-6">
-                        <form class="form-horizontal">
+                    <form class="form-horizontal">
                         <fieldset>
 
                         <!-- Form Name -->
                         <legend>Add New Criminal Record</legend>
 
+                        <div class="form-group">
+                          <label class="col-md-4 control-label" for="criminal_id">Criminal ID</label>  
+                          <div class="col-md-5">
+                          <input id="criminal_id" name="criminal_id" type="text" placeholder="123456" class="form-control input-md" required="">
+    
+                         </div>
+                        </div>
+
                         <!-- Text input-->
                         <div class="form-group">
                           <label class="col-md-4 control-label" for="Name">Name</label>  
                           <div class="col-md-5">
-                          <input id="Name" name="Name" type="text" placeholder="Enter Criminal Name" class="form-control input-md">
+                          <input id="name" name="Name" type="text" placeholder="Enter Criminal Name" class="form-control input-md">
                             
                           </div>
                         </div>
@@ -186,25 +191,82 @@
                           <label class="col-md-4 control-label" for="contact">Contact No.</label>  
                           <div class="col-md-4">
                           <input id="contact" name="contact" type="text" placeholder="" class="form-control input-md">
-                            
-                          </div>
-                        </div>
 
-                        <!-- Button (Double) -->
-                        <div class="form-group">
-                          <label class="col-md-4 control-label" for="button1id"></label>
-                          <div class="col-md-8">
-                            <button id="button1id" name="button1id" class="btn btn-success">Submit</button>
-                            <button id="button2id" name="button2id" class="btn btn-default">Reset</button>
                           </div>
                         </div>
 
                         </fieldset>
-                        </form>
+                        <fieldset>
 
+                        <!-- Form Name -->
+                        <legend>Crime Info</legend>
+
+                        <!-- Text input-->
+                        <div class="form-group">
+                          <label class="col-md-4 control-label" for="crime_type">Crime Type</label>  
+                          <div class="col-md-6">
+                          <input id="crime_type" name="crime_type" type="text" placeholder="e.g Murder, Robbery etc" class="form-control input-md">
+                            
+                          </div>
+                        </div>
+
+                        <!-- Textarea -->
+                        <div class="form-group">
+                          <label class="col-md-4 control-label" for="crime_des">Crime Description</label>
+                          <div class="col-md-4">                     
+                            <textarea class="form-control" id="crime_des" name="crime_des"></textarea>
+                          </div>
+                        </div>
+
+                        <!-- Text input-->
+                        <div class="form-group">
+                          <label class="col-md-4 control-label" for="court_status">Court Status</label>  
+                          <div class="col-md-6">
+                          <input id="court_status" name="court_status" type="text" placeholder="" class="form-control input-md">
+                            
+                          </div>
+                        </div>
+
+                        </fieldset>
+                        <fieldset>
+
+                        <!-- Form Name -->
+                        <legend>Officer Info</legend>
+
+                        <!-- Text input-->
+                        <div class="form-group">
+                          <label class="col-md-4 control-label" for="officer_name">Officer Name</label>  
+                          <div class="col-md-5">
+                          <input id="officer_name" name="officer_name" type="text" placeholder="" class="form-control input-md">
+                            
+                          </div>
+                        </div>
+
+                        <!-- Text input-->
+                        <div class="form-group">
+                          <label class="col-md-4 control-label" for="rank">Rank</label>  
+                          <div class="col-md-4">
+                          <input id="rank" name="rank" type="text" placeholder="" class="form-control input-md">
+                            
+                          </div>
+                        </div>
+
+                        <!-- Text input-->
+                        <div class="form-group">
+                          <label class="col-md-4 control-label" for="officer_contact">Officer Contact</label>  
+                          <div class="col-md-4">
+                          <input id="officer_contact" name="officer_contact" type="text" placeholder="" class="form-control input-md">
+                            
+                          </div>
+                        </div>
+
+                        </fieldset>
+
+                        </form>
                     </div>
+
                     <div class="col-md-6">
-                        <p class="well">But the full-width layout means that you wont be using containers.</p>
+                        
                     </div>
                     <div class="col-md-4">
                         <p class="well">Three Column Example</p>
