@@ -73,7 +73,7 @@
                             </h2>
                             <br>
                             <h3>
-                              <span>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</span>
+                              
                             </h3>
                             <br>
                             <div class="">
@@ -91,7 +91,7 @@
                             </h2>
                             <br>
                             <h3>
-                              <span>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</span>
+                              
                             </h3>
                             <br>
                             <div class="">

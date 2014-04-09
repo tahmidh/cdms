@@ -32,7 +32,7 @@
           <span class="icon-bar"></span>
           <span class="icon-bar"></span>
         </button>
-        <a class="navbar-brand" href="dashboard.php">CDMS</a>
+        <a class="navbar-brand" href="index.php">CDMS</a>
       </div>
 
       <!-- Collect the nav links, forms, and other content for toggling -->
@@ -73,10 +73,11 @@
                 </li>
             </ul>
         </div>
-        <!-- Page content -->
+         <!-- Page content -->
         <div id="page-content-wrapper">
             <div class="content-header">
-
+                <h1>
+                </h1>
             </div>
             <!-- Keep all page content within the page-content inset div! -->
             <div class="page-content inset">
@@ -104,7 +105,6 @@
         </div>
 
     </div>
-
     <!-- JavaScript -->
     <script src="js/jquery-1.10.2.js"></script>
     <script src="js/bootstrap.js"></script>

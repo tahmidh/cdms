@@ -32,7 +32,7 @@
           <span class="icon-bar"></span>
           <span class="icon-bar"></span>
         </button>
-        <a class="navbar-brand" href="dashboard.php">CDMS</a>
+        <a class="navbar-brand" href="index.php">CDMS</a>
       </div>
 
       <!-- Collect the nav links, forms, and other content for toggling -->
@@ -73,38 +73,101 @@
                 </li>
             </ul>
         </div>
-        <!-- Page content -->
+         <!-- Page content -->
         <div id="page-content-wrapper">
             <div class="content-header">
-
+                <h1>
+                </h1>
             </div>
             <!-- Keep all page content within the page-content inset div! -->
             <div class="page-content inset">
                 <div class="row">
                     <div class="col-md-12">
-                        <p class="lead">This simple sidebar template has a hint of JavaScript to make the template responsive. It also includes Font Awesome icon fonts.</p>
+                        <?php
+        include "connection2.php";
+        
+        if(isset($_POST["submit"]))  {
+            
+            $sql_CI  = "INSERT INTO `crime` (`idCrime`, `type`, `description`, `court status`) VALUES(";
+            $sql_CI .= "NULL,'" . $_POST["crime_type"] . "','" . $_POST["crime_des"] . "','" . $_POST["court_status"] . "'";
+            $sql_CI .= ")";   
+            
+            $retval = mysql_query($sql_CI);
+            if(! $retval )
+            {
+              die('Could not enter data in Crime Info: ' . mysql_error());
+            }
+            echo "Entered data successfully\n <a href='dashboard.php'>Go back to Dashboard</a>";
+            mysql_close();
+        } else {
+        ?>
+                    <form class="form-horizontal" action="add_by_crime.php" method="POST">
+
+                        <!-- Form Name -->
+                        <legend>Crime Info</legend>
+
+                        <!-- Text input-->
+                        <div class="form-group">
+                          <label class="col-md-4 control-label" for="crime_type">Crime Type</label>  
+                          <div class="col-md-4">
+                          <input id="crime_type" name="crime_type" type="text" placeholder="e.g Murder, Robbery etc" class="form-control input-md">
+                            
+                          </div>
+                        </div>
+
+                        <!-- Textarea -->
+                        <div class="form-group">
+                          <label class="col-md-4 control-label" for="crime_des">Crime Description</label>
+                          <div class="col-md-4">                     
+                            <textarea class="form-control" id="crime_des" name="crime_des"></textarea>
+                          </div>
+                        </div>
+
+                        <!-- Text input-->
+                        <div class="form-group">
+                          <label class="col-md-4 control-label" for="court_status">Court Status</label>  
+                          <div class="col-md-4">
+                          <input id="court_status" name="court_status" type="text" placeholder="" class="form-control input-md">
+                            
+                          </div>
+                        </div>
+
+                        </fieldset>
+                        <!-- Button (Double) -->
+                        <div class="form-group">
+                          <label class="col-md-4 control-label" for="button1id"></label>
+                          <div class="col-md-8">
+                            <button id="submit" name="submit" type="submit" class="btn btn-success">Submit</button>
+                            <button id="button2id" name="button2id" class="btn btn-danger">Reset</button>
+                          </div>
+                        </div>
+
+                        </form>
+
+                <?php
+                  }
+                ?>
                     </div>
                     <div class="col-md-6">
-                        <p class="well">The template still uses the default Bootstrap rows and columns.</p>
+                        
                     </div>
                     <div class="col-md-6">
-                        <p class="well">But the full-width layout means that you wont be using containers.</p>
+                       
                     </div>
                     <div class="col-md-4">
-                        <p class="well">Three Column Example</p>
+                        
                     </div>
                     <div class="col-md-4">
-                        <p class="well">Three Column Example</p>
+                        
                     </div>
                     <div class="col-md-4">
-                        <p class="well">You get the idea! Do whatever you want in the page content area!</p>
+                        
                     </div>
                 </div>
             </div>
         </div>
 
     </div>
-
     <!-- JavaScript -->
     <script src="js/jquery-1.10.2.js"></script>
     <script src="js/bootstrap.js"></script>
