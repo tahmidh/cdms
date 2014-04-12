@@ -1,6 +1,5 @@
 <?php
     require_once('auth.php');
-    require_once('MysqliDb.php');
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -83,82 +82,17 @@
             <!-- Keep all page content within the page-content inset div! -->
             <div class="page-content inset">
                 <div class="row">
-                    <div class="col-md-12">
-                        <?php
-        include "connection3.php";
-        
-        if(isset($_POST["submit"]))  {
-            $insertData = array(
-            'idCrime' => NULL,
-            'type' => $_POST["crime_type"],
-            'description' => $_POST["crime_des"],
-            'status' => $_POST["court_status"],
-          );
-          if ( $db->insert('crime', $insertData) ) echo "Entered data successfully! crime ID of last inserted record is: " .$db->getInsertId()." \n <a href='update_crime.php'> Now Update Witness & Officer!</a>";
-          } else {
-          ?>
-                    <form class="form-horizontal" action="add_by_crime.php" method="POST">
-                        <fieldset>
-                        <!-- Form Name -->
-                        <legend>Crime Info</legend>
-
-                        <!-- Text input-->
-                        <div class="form-group">
-                          <label class="col-md-4 control-label" for="crime_type">Crime Type</label>  
-                          <div class="col-md-4">
-                          <input id="crime_type" name="crime_type" type="text" placeholder="e.g Murder, Robbery etc" class="form-control input-md">
-                            
-                          </div>
-                        </div>
-
-                        <!-- Textarea -->
-                        <div class="form-group">
-                          <label class="col-md-4 control-label" for="crime_des">Crime Description</label>
-                          <div class="col-md-4">                     
-                            <textarea class="form-control" id="crime_des" name="crime_des"></textarea>
-                          </div>
-                        </div>
-
-                        <!-- Text input-->
-                        <div class="form-group">
-                          <label class="col-md-4 control-label" for="court_status">Status</label>  
-                          <div class="col-md-4">
-                          <input id="court_status" name="court_status" type="text" placeholder="e.g On investigation" class="form-control input-md">
-                            
-                          </div>
-                        </div>
-
-                        </fieldset>
-                        <!-- Button (Double) -->
-                        <div class="form-group">
-                          <label class="col-md-4 control-label" for="button1id"></label>
-                          <div class="col-md-8">
-                            <button id="submit" name="submit" type="submit" class="btn btn-success">Submit</button>
-                            <button id="button2id" name="button2id" class="btn btn-danger">Reset</button>
-                          </div>
-                        </div>
-
-                        </form>
-
-                <?php
-                  }
-                ?>
+                    <div class="col-md-6">
+                        <p class="well">
+                        <a href="update_criminal.php" class="btn btn-primary btn-default">Update Criminal Record by Criminal</a>
+                        </p>
                     </div>
                     <div class="col-md-6">
-                        
+                        <p class="well">
+                            <a href="update_crime.php" class="btn btn-primary btn-default">Update Criminal Record by Crime</a>
+                        </p>
                     </div>
-                    <div class="col-md-6">
-                       
-                    </div>
-                    <div class="col-md-4">
-                        
-                    </div>
-                    <div class="col-md-4">
-                        
-                    </div>
-                    <div class="col-md-4">
-                        
-                    </div>
+                   
                 </div>
             </div>
         </div>

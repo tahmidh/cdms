@@ -63,7 +63,7 @@
                 </li>
                 <li><a href="show_record.php">Show Record</a>
                 </li>
-                <li><a href="update_record.php">Update Record</a>
+                <li><a href="update_front.php">Update Record</a>
                 </li>
                 <li><a href="#"></a>
                 </li>

@@ -1,5 +1,6 @@
 <?php
     require_once('auth.php');
+    require_once('MysqliDb.php');
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -32,7 +33,7 @@
           <span class="icon-bar"></span>
           <span class="icon-bar"></span>
         </button>
-        <a class="navbar-brand" href="index.php">CDMS</a>
+        <a class="navbar-brand" href="dashboard.php">CDMS</a>
       </div>
 
       <!-- Collect the nav links, forms, and other content for toggling -->
@@ -63,7 +64,7 @@
                 </li>
                 <li><a href="show_record.php">Show Record</a>
                 </li>
-                <li><a href="update_record.php">Update Record</a>
+                <li><a href="update_front.php">Update Record</a>
                 </li>
                 <li><a href="#"></a>
                 </li>
@@ -84,90 +85,111 @@
                 <div class="row">
                     <div class="col-md-12">
                         <?php
-        include "connection2.php";
+        include "connection3.php";
         
         if(isset($_POST["submit"]))  {
 
-            $sql_OI  = "INSERT INTO `officier` (`idOfficier`, `name`, `rank`, `contact`) VALUES(";
-            $sql_OI .= "NULL,'" . $_POST["officer_name"] . "','" . $_POST["rank"] . "','" . $_POST["officer_contact"] . "'";
-            $sql_OI .= ")";   
-            
-            $retval = mysql_query($sql_OI);
-            if(! $retval )
-            {
-              die('Could not enter data in Officer Info: ' . mysql_error());
-            }
-           
-            $sql_CHI  = "INSERT INTO `health` (`idHealth`, `description`, `weight`, `Criminal Info_criminal id`) VALUES(";
-            $sql_CHI .= "NULL,'" . $_POST["health_des"] . "','" . $_POST["weight"] ."'";
-            $sql_CHI .= ")";   
-            
-            $retval = mysql_query($sql_CHI);
-            if(! $retval )
-            {
-              die('Could not enter data in Health Info: ' . mysql_error());
-            }
-            
-            $sql_JI  = "INSERT INTO `jail` (`idJail`, `jail name`, `address`, `head of incharge`, `contact`, `Cell_idCell`, `Criminal Info_criminal id`) VALUES(";
-            $sql_JI .= "NULL,'" . $_POST["jail_name"] . "','" . $_POST["jail_add"] . "','" . $_POST["charge"] . "','" . $_POST["jail_contact"] . "','" . $_POST["cell_id"] . "',NULL";
-            $sql_JI .= ")";   
-            
-            $retval = mysql_query($sql_JI);
-            if(! $retval )
-            {
-              die('Could not enter data in Jail Info: ' . mysql_error());
-            }
-          /*   
-            mysql_query($sql_Cel);
+            $lastId = $_POST["criminalid"];
 
-            $sql_CWI="INSERT INTO students (`no`, `f_name`, `l_name`, `student_id`, `email`, `date`, `gr`) VALUES(NULL,'" . $_POST["f_name"] . "','" . $_POST["l_name"] . "'," . $_POST["student_id"] . ",'" . $_POST["email"] . "','" . $date."'," . $_POST["gr"] . ")";   /*  construct the query */
-          /*   
-            mysql_query($sql_CWI);
+            $insertData = array(
+            'idCrime' => NULL,
+            'type' => $_POST["crime_type"],
+            'description' => $_POST["crime_des"],
+            'status' => $_POST["court_status"],
+            'Criminal_Info_criminal_id' => $lastId
+            );
+            if ( $db->insert('crime', $insertData) ) echo "crime updated\n";
 
-            $sql_COI="INSERT INTO students (`no`, `f_name`, `l_name`, `student_id`, `email`, `date`, `gr`) VALUES(NULL,'" . $_POST["f_name"] . "','" . $_POST["l_name"] . "'," . $_POST["student_id"] . ",'" . $_POST["email"] . "','" . $date."'," . $_POST["gr"] . ")";   /*  construct the query */
-          /*   
-            mysql_query($sql_COI); 
-          */
-            echo "Entered data successfully\n <a href='dashboard.php'>Go back to Dashboard</a>";
-            mysql_close();
+            $insertData = array(
+            'idHealth' => NULL,
+            'description' => $_POST["health_des"],
+            'weight' => $_POST["weight"],
+            'Criminal_Info_criminal_id' => $lastId
+            );
+            if ( $db->insert('health', $insertData) ) echo "health updated\n";
+
+            $insertData = array(
+            'idJail' => NULL,
+            'jail_name' => $_POST["jail_name"],
+            'address' => $_POST["jail_add"],
+            'head_of_incharge' => $_POST["charge"],
+            'contact' => $_POST["jail_contact"],
+            'cell_id' => $_POST["cell_id"],
+            'capacity' => $_POST["capacity"],
+            'Criminal_Info_criminal_id' => $lastId
+            );
+            if ( $db->insert('jail', $insertData) ) echo "jail updated\n";
+
+            $insertData = array(
+            'idOutsider' => NULL,
+            'name' => $_POST["name_out"],
+            'address' => $_POST["add_out"],
+            'ssn' => $_POST["ssn_out"],
+            'contact' => $_POST["contact_out"],
+            'Criminal_Info_criminal_id' => $lastId
+            );
+            if ( $db->insert('outsider', $insertData) ) echo "outsider updated\n";
+            $outsider = $db->getInsertId();
+            
+            $insertData = array(
+            'idWork' => NULL,
+            'description' => $_POST["des"],
+            'salary' => $_POST["salary"],
+            'Outsider_idOutsider' => $outsider,
+            'Criminal_Info_criminal_id' => $lastId
+            );
+            if ( $db->insert('work', $insertData) ) echo "work updated\n";
+
         } else {
         ?>
                       
-                    <form class="form-horizontal" action="update_record.php" method="POST">
+                    <form class="form-horizontal" action="update_criminal.php" method="POST">
+
+                        <fieldset>
+                        <legend>Update Criminal Record by Criminal</legend>
+
+                        <!-- Text input-->
+                        <div class="form-group">
+                          <label class="col-md-4 control-label" for="textinput">Criminal ID</label>  
+                          <div class="col-md-4">
+                          <input id="textinput" name="criminalid" type="text" placeholder="" class="form-control input-md" required="">
+                            
+                          </div>
+                        </div>
+                        </fieldset>
                         
                         <fieldset>
-
                         <!-- Form Name -->
-                        <legend>Officer Info</legend>
+                        <legend>Crime Info</legend>
 
                         <!-- Text input-->
                         <div class="form-group">
-                          <label class="col-md-4 control-label" for="officer_name">Officer Name</label>  
+                          <label class="col-md-4 control-label" for="crime_type">Crime Type</label>  
                           <div class="col-md-4">
-                          <input id="officer_name" name="officer_name" type="text" placeholder="" class="form-control input-md">
+                          <input id="crime_type" name="crime_type" type="text" placeholder="e.g Murder, Robbery etc" class="form-control input-md">
                             
+                          </div>
+                        </div>
+
+                        <!-- Textarea -->
+                        <div class="form-group">
+                          <label class="col-md-4 control-label" for="crime_des">Crime Description</label>
+                          <div class="col-md-4">                     
+                            <textarea class="form-control" id="crime_des" placeholder="e.g On investigation" name="crime_des"></textarea>
                           </div>
                         </div>
 
                         <!-- Text input-->
                         <div class="form-group">
-                          <label class="col-md-4 control-label" for="rank">Rank</label>  
+                          <label class="col-md-4 control-label" for="court_status">Status</label>  
                           <div class="col-md-4">
-                          <input id="rank" name="rank" type="text" placeholder="" class="form-control input-md">
-                            
-                          </div>
-                        </div>
-
-                        <!-- Text input-->
-                        <div class="form-group">
-                          <label class="col-md-4 control-label" for="officer_contact">Officer Contact</label>  
-                          <div class="col-md-4">
-                          <input id="officer_contact" name="officer_contact" type="text" placeholder="" class="form-control input-md">
+                          <input id="court_status" name="court_status" type="text" placeholder="" class="form-control input-md">
                             
                           </div>
                         </div>
 
                         </fieldset>
+
                         <fieldset>
 
                         <!-- Form Name -->
@@ -233,23 +255,6 @@
                           </div>
                         </div>
 
-                        <!-- Text input-->
-                        <div class="form-group">
-                          <label class="col-md-4 control-label" for="cell_id">Cell No</label>  
-                          <div class="col-md-4">
-                          <input id="cell_id" name="cell_id" type="text" placeholder="criminal's cell no" class="form-control input-md">
-                            
-                          </div>
-                        </div>
-
-                        </fieldset>
-
-                        <fieldset>
-
-                        <!-- Form Name -->
-                        <legend>Cell Info</legend>
-
-                        <!-- Text input-->
                         <div class="form-group">
                           <label class="col-md-4 control-label" for="cell_id">Cell ID</label>  
                           <div class="col-md-4">
@@ -263,31 +268,6 @@
                           <label class="col-md-4 control-label" for="capacity">Capacity</label>  
                           <div class="col-md-4">
                           <input id="capacity" name="capacity" type="text" placeholder="" class="form-control input-md">
-                            
-                          </div>
-                        </div>
-
-                        </fieldset>
-
-                        <fieldset>
-
-                        <!-- Form Name -->
-                        <legend>Criminal Work Info</legend>
-
-                        <!-- Text input-->
-                        <div class="form-group">
-                          <label class="col-md-4 control-label" for="des">Description</label>  
-                          <div class="col-md-4">
-                          <input id="des" name="des" type="text" placeholder="" class="form-control input-md">
-                            
-                          </div>
-                        </div>
-
-                        <!-- Text input-->
-                        <div class="form-group">
-                          <label class="col-md-4 control-label" for="salary">Salary</label>  
-                          <div class="col-md-4">
-                          <input id="salary" name="salary" type="text" placeholder="" class="form-control input-md">
                             
                           </div>
                         </div>
@@ -331,6 +311,31 @@
                           <label class="col-md-4 control-label" for="contact_out">Contact</label>  
                           <div class="col-md-4">
                           <input id="contact_out" name="contact_out" type="text" placeholder="" class="form-control input-md">
+                            
+                          </div>
+                        </div>
+
+                        </fieldset>
+
+                        <fieldset>
+
+                        <!-- Form Name -->
+                        <legend>Criminal Work Info</legend>
+
+                        <!-- Text input-->
+                        <div class="form-group">
+                          <label class="col-md-4 control-label" for="des">Description</label>  
+                          <div class="col-md-4">
+                          <input id="des" name="des" type="text" placeholder="" class="form-control input-md">
+                            
+                          </div>
+                        </div>
+
+                        <!-- Text input-->
+                        <div class="form-group">
+                          <label class="col-md-4 control-label" for="salary">Salary</label>  
+                          <div class="col-md-4">
+                          <input id="salary" name="salary" type="text" placeholder="" class="form-control input-md">
                             
                           </div>
                         </div>

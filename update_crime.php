@@ -84,46 +84,122 @@
             <div class="page-content inset">
                 <div class="row">
                     <div class="col-md-12">
-                        <?php
+        <?php
+        
         include "connection3.php";
         
         if(isset($_POST["submit"]))  {
-          $insertData = array(
-            'criminal_id' => NULL,
-            'name' => $_POST["name_criminal"],
-            'address' => $_POST["address_criminal"],
+
+            $lastId = $_POST["crimeid"];
+
+            $updateData = array(
+            'Criminal_Info_criminal_id' => $_POST["criminal_id"]
+            );
+            $db->where('idCrime', $lastId);
+            if ( $db->update('crime', $updateData) ) echo "crime updated\n";
+
+            $insertData = array(
+            'idOfficier' => NULL,
+            'name' => $_POST["officer_name"],
+            'rank' => $_POST["rank"],
+            'contact' => $_POST["officer_contact"],
+            'Crime_idCrime' => $lastId
+            );
+            if ( $db->insert('officier', $insertData) ) echo "officier updated\n";
+
+            $insertData = array(
+            'idWitness' => NULL,
+            'Name' => $_POST["name"],
             'age' => $_POST["age"],
-            'ssn' => $_POST["ssn"],
-            'gender' => $_POST["gender"],
-            'eye_color' => $_POST["eye"],
-            'height' => $_POST["height"],
-            'contact' => $_POST["contact_criminal"]
-          );
-          if ( $db->insert('Criminal_info', $insertData) ) echo "Entered data successfully! Criminal ID of last inserted record is: " .$db->getInsertId()." \n <a href='update_criminal.php'>Now update criminal health etc.</a>";
+            'Resident_Address' => $_POST["resident"],
+            'Work_Address' => $_POST["work"],
+            'Contact' => $_POST["contact"],
+            'Note' => $_POST["note"],
+            'Crime_idCrime' => $lastId
+            );
+            if ( $db->insert('witness', $insertData) ) echo "witness updated\n";
+
         } else {
         ?>
                       
-                    <form class="form-horizontal" action="add_by_criminal.php" method="POST">
+                    <form class="form-horizontal" action="update_crime.php" method="POST">
+
                         <fieldset>
 
                         <!-- Form Name -->
-                        <legend>Add New Criminal Record</legend>
-
+                        <legend>Update Criminal Record by Crime</legend>
 
                         <!-- Text input-->
                         <div class="form-group">
-                          <label class="col-md-4 control-label" for="name_criminal">Name</label>  
+                          <label class="col-md-4 control-label" for="crime">Crime ID</label>  
                           <div class="col-md-4">
-                          <input id="name_criminal" name="name_criminal" type="text" placeholder="Enter Criminal Name" class="form-control input-md">
+                          <input id="crime" name="crimeid" type="text" placeholder="" class="form-control input-md" required="">
+                            
+                          </div>
+                        </div>
+
+                        </fieldset>
+
+                        <fieldset>
+
+                        <!-- Form Name -->
+                        <legend>Associate Criminal with crime</legend>
+
+                        <!-- Text input-->
+                        <div class="form-group">
+                          <label class="col-md-4 control-label" for="criminal_id">Criminial ID</label>  
+                          <div class="col-md-4">
+                          <input id="criminal_id" name="criminal_id" type="text" placeholder="enter criminal id" class="form-control input-md">
+                            
+                          </div>
+                        </div>
+
+                        </fieldset>
+                        
+                        <fieldset>
+
+                        <!-- Form Name -->
+                        <legend>Officer Info</legend>
+
+                        <!-- Text input-->
+                        <div class="form-group">
+                          <label class="col-md-4 control-label" for="officer_name">Officer Name</label>  
+                          <div class="col-md-4">
+                          <input id="officer_name" name="officer_name" type="text" placeholder="" class="form-control input-md">
                             
                           </div>
                         </div>
 
                         <!-- Text input-->
                         <div class="form-group">
-                          <label class="col-md-4 control-label" for="address_criminal">Address</label>  
+                          <label class="col-md-4 control-label" for="rank">Rank</label>  
                           <div class="col-md-4">
-                          <input id="address_criminal" name="address_criminal" type="text" placeholder="Enter Address of Criminal" class="form-control input-md">
+                          <input id="rank" name="rank" type="text" placeholder="" class="form-control input-md">
+                            
+                          </div>
+                        </div>
+
+                        <!-- Text input-->
+                        <div class="form-group">
+                          <label class="col-md-4 control-label" for="officer_contact">Officer Contact</label>  
+                          <div class="col-md-4">
+                          <input id="officer_contact" name="officer_contact" type="text" placeholder="" class="form-control input-md">
+                            
+                          </div>
+                        </div>
+
+                        </fieldset>
+
+                        <fieldset>
+
+                        <!-- Form Name -->
+                        <legend>Witness</legend>
+
+                        <!-- Text input-->
+                        <div class="form-group">
+                          <label class="col-md-4 control-label" for="name">Name</label>  
+                          <div class="col-md-4">
+                          <input id="name" name="name" type="text" placeholder="" class="form-control input-md">
                             
                           </div>
                         </div>
@@ -139,50 +215,42 @@
 
                         <!-- Text input-->
                         <div class="form-group">
-                          <label class="col-md-4 control-label" for="ssn">SSN</label>  
+                          <label class="col-md-4 control-label" for="resident">Resident Address</label>  
                           <div class="col-md-4">
-                          <input id="ssn" name="ssn" type="text" placeholder="Social Security Number" class="form-control input-md" required="">
+                          <input id="resident" name="resident" type="text" placeholder="" class="form-control input-md">
                             
                           </div>
                         </div>
 
                         <!-- Text input-->
                         <div class="form-group">
-                          <label class="col-md-4 control-label" for="gender">Gender</label>  
+                          <label class="col-md-4 control-label" for="work">Work Address</label>  
                           <div class="col-md-4">
-                          <input id="gender" name="gender" type="text" placeholder="Male or Female" class="form-control input-md">
+                          <input id="work" name="work" type="text" placeholder="" class="form-control input-md">
                             
                           </div>
                         </div>
 
                         <!-- Text input-->
                         <div class="form-group">
-                          <label class="col-md-4 control-label" for="eye">Eye Color</label>  
+                          <label class="col-md-4 control-label" for="contact">Contact</label>  
                           <div class="col-md-4">
-                          <input id="eye" name="eye" type="text" placeholder="e.g Black, Blue, Grey, Brown etc" class="form-control input-md">
+                          <input id="contact" name="contact" type="text" placeholder="" class="form-control input-md">
                             
                           </div>
                         </div>
 
-                        <!-- Text input-->
+                        <!-- Textarea -->
                         <div class="form-group">
-                          <label class="col-md-4 control-label" for="height">Height</label>  
-                          <div class="col-md-4">
-                          <input id="height" name="height" type="text" placeholder="" class="form-control input-md">
-                            
-                          </div>
-                        </div>
-
-                        <!-- Text input-->
-                        <div class="form-group">
-                          <label class="col-md-4 control-label" for="contact_criminal">Contact No.</label>  
-                          <div class="col-md-4">
-                          <input id="contact_criminal" name="contact_criminal" type="text" placeholder="" class="form-control input-md">
-
+                          <label class="col-md-4 control-label" for="note">Note</label>
+                          <div class="col-md-4">                     
+                            <textarea class="form-control" id="note" name="note"></textarea>
                           </div>
                         </div>
 
                         </fieldset>
+                        
+
                         <!-- Button (Double) -->
                         <div class="form-group">
                           <label class="col-md-4 control-label" for="button1id"></label>
@@ -191,28 +259,27 @@
                             <button id="button2id" name="button2id" class="btn btn-danger">Reset</button>
                           </div>
                         </div>
-
-                        
-                        </form>
+                  </form>
 
                 <?php
                   }
                 ?>
                     </div>
-                    <div class="col-md-6">
-                                            </div>
-                    <div class="col-md-6">
-                        
-                    </div>
-                    <div class="col-md-4">
-                        
-                    </div>
-                    <div class="col-md-4">
-                        
-                    </div>
-                    <div class="col-md-4">
-                        
-                    </div>
+                      <div class="col-md-6">
+                          
+                      </div>
+                      <div class="col-md-6">
+                          
+                      </div>
+                      <div class="col-md-4">
+                          
+                      </div>
+                      <div class="col-md-4">
+                          
+                      </div>
+                      <div class="col-md-4">
+                         
+                      </div>
                 </div>
             </div>
         </div>
